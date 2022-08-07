@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% if flag=='home' %}
+        Home
+        {% endif %}
+
+        {% if flag=='action' %}
+        Retail Data
+        {% endif %}
+
+        {% if flag=='record_data_template' %}
+        Record Details
+        {% endif %}
+
+        {% if flag=='error' %}
+        Error
+        {% endif %}
+
+        {% if flag=='no_results' %}
+        No Record Found
+        {% endif %}
+
+    </title>
+</head>
+<body>
+
+{% if flag == 'home' %}
+<center>
+    <div>
+        <form action="/show_retail_data" enctype="multipart/form-data" method="post">
+            <input id="file" name="file" type="file"/><br>
+            <input id="upload" type="submit" value="Upload">
+        </form>
+
+
+    </div>
+</center>
+{% endif %}
+
+{% if flag=='action' %}
+{% if inner_flag == 'display'%}
+<p>File uploaded successfully</p>
+<p>File Name: {{name}}</p>
+{% endif %}
+
+<div align="center" id="div1">
+    <center>
+    <table class="center">
+        <h1>
+            <!--Displaying the converted table-->
+            {% for table in tables %}
+            <h2>{{titles[loop.index]}}</h2>
+            {{ table|safe }}
+            {% endfor %}
+        </h1>
+    </table>
+    </center>
+
+    <form action="/record_data_template">
+        <input id="Search" name="action" type="submit" value="Search">
+    </form>
+    <form action="/record_data_template">
+        <input id="Update" name="action" type="submit" value="Update">
+    </form>
+    <form action="/record_data_template">
+        <input id="Delete" name="action" type="submit" value="Delete">
+    </form>
+
+</div>
+
+{% endif %}
+
+{% if flag == 'record_data_template' %}
+<form action=/{{act}} method="post">
+    <label for="store_id">Store ID:</label><br>
+    <input id="store_id" name="store_id" type="text"><br>
+
+    <label for="product_name">Product Name</label><br>
+    <input id="product_name" name="product_name" type="text"><br><br>
+
+    <label for="sku">SKU</label><br>
+    <input id="sku" name="sku" type="text"><br><br>
+
+    <label for="price">Price</label><br>
+    <input id="price" name="price" type="text"><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+{% endif %}
+
+
+{% if flag=='error' %}
+{{msg}}
+{% endif %}
+
+{% if flag=='no_results' %}
+{{msg}}
+{% endif %}
+
+
+
+
+</body>
+</html>
+
+
+
